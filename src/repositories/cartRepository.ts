@@ -18,4 +18,8 @@ export default class CartRepocitory {
   async findByUser(userId: number) {
     return await Cart.findOne({ where: { userId } });
   }
+
+  async delete(id: number) {
+    return await Cart.destroy({ where: { id } });
+  }
 }

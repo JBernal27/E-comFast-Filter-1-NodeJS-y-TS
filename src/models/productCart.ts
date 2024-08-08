@@ -32,7 +32,7 @@ export class ProductCart extends Model {
   productId!: number;
 
   @BelongsTo(() => Product)
-  products!: Product[];
+  products!: Product;
 
   @ForeignKey(() => Cart)
   @Column({
@@ -43,7 +43,4 @@ export class ProductCart extends Model {
 
   @BelongsTo(() => Cart)
   carts!: Product[];
-
-  @HasMany(() => Order)
-  order!: Order;
 }

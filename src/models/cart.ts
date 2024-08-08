@@ -12,6 +12,7 @@ import {
   } from "sequelize-typescript";
 import { User } from "./user";
 import { ProductCart } from "./productCart";
+import { Order } from "./order";
   
   @Table({
     tableName: "carts",
@@ -35,6 +36,9 @@ import { ProductCart } from "./productCart";
     @BelongsTo(() => User)
     user!: User;
 
+    @HasOne(() => Order)
+    order!: Order
+    
     @HasMany(() => ProductCart)
     productCarts!: ProductCart;
   }

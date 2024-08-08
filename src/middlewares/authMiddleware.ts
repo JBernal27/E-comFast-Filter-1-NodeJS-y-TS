@@ -6,10 +6,9 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
   if (authHeader) {
     const token = authHeader;
-
-    jwt.verify(token, 'clan-ritchie', (err, user) => {
+    jwt.verify(token, 'clan-ritchie', (err) => {
       if (err) {
-        return res.sendStatus(403).json({ status: 403, message:"Su sesion ha terminado, inicie sesion nuevamente" });
+        return res.status(403).json({ status: 403, message:"Su sesion ha terminado, inicie sesion nuevamente" });
       }
       next();
     });

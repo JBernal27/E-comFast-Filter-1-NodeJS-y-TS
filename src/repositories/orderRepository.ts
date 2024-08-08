@@ -7,8 +7,16 @@ export default class OrderRepository {
     return await Order.create(order);
   }
 
+  async update(order: Partial<Order>) {
+    return await Order.update(order, {where: {userId:order.userId}});
+  }
+
   async findAll() {
     return await Order.findAll();
+  }
+
+  async getByUserId(userId:number) {
+    return await Order.findAll({where:{userId}});
   }
 
   async delete(id: number) {

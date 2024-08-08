@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 @injectable()
 export default class UserService {
-  constructor(@inject(UserRepository) private userRepocitory: UserRepository) {}
+  constructor(@inject(UserRepository) private userRepocitory: UserRepository) { }
 
   async create(user: User) {
     return await this.userRepocitory.create(user);
@@ -19,7 +19,7 @@ export default class UserService {
     const user = await this.userRepocitory.findById(id);
     if (user) {
       return user;
-    } else throw new Error("No extiste un paciente con ese ID");
+    } else throw new Error("No extiste un usuario con ese ID");
   }
 
   async getUserByEmail(user: User) {
@@ -39,7 +39,7 @@ export default class UserService {
       const payload = {
         id: userFounded.id,
         email: userFounded.email,
-        role: userFounded.roleId,
+        roleId: userFounded.roleId,
       };
 
       const token = jwt.sign(payload, secretKey, options); // hs256 es el tipo de algoritmo automaticamente generado por JWT
@@ -47,5 +47,28 @@ export default class UserService {
     } else {
       throw new Error("Wrong password");
     }
+  }
+
+  async delete(id: number) {
+    return await this.userRepocitory.delete(id)
+  }
+
+  async update(id: number, user: Partial<User>, tokenUserId: number, TokenRoleId: number) {
+    if (!isNaN(id)) {
+      const allowedFields = ['email', 'password'];
+      if (TokenRoleId == 2 && tokenUserId != id) {
+        throw new Error("Solo puedes actualizar tus datos");
+      }
+      TokenRoleId == 1 && allowedFields.push('roleId')
+      const userKeys = Object.keys(user);
+      if (!userKeys.every(key => allowedFields.includes(key))) {
+        throw new Error("Los campos a modificar no son correctos");
+      }
+    } else {
+      throw new Error("El id ingresado no es numérico");
+    }
+
+    await this.userRepocitory.update(id, user);
+    return await this.userRepocitory.findById(id);
   }
 }

@@ -11,6 +11,7 @@ import {
 } from "sequelize-typescript";
 import { ProductCart } from "./productCart";
 import { User } from "./user";
+import { Cart } from "./cart";
 
 @Table({
   tableName: "orders",
@@ -40,13 +41,13 @@ export class Order extends Model {
   @BelongsTo(() => User)
   user!: User;
 
-  @ForeignKey(() => ProductCart)
+  @ForeignKey(() => Cart)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  productCardId!: number;
+  cartId!: number;
 
-  @BelongsTo(() => ProductCart)
-  productCard!: ProductCart;
+  @BelongsTo(() => Cart)
+  cart!: Cart;
 }

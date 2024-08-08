@@ -16,11 +16,15 @@ export default class ProductService {
     return await this.productRepocitory.findAll();
   }
 
+  async getByName(name : string) {
+    return await this.productRepocitory.findByName(name);
+  }
+
   async getById(id: number) {
     const product = await this.productRepocitory.findById(id);
     if (product) {
       return product;
-    } else throw new Error("No extiste un producto con ese ID");
+    } else throw new Error("No extiste un producto con el ID " + id);
   }
 
   async chageStock(newProduct: Product) {

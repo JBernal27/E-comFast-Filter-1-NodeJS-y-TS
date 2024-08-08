@@ -14,6 +14,10 @@ export default class ProductRepository {
     return await Product.findByPk(id);
   }
 
+  async findByName(name : string) {
+    return await Product.findOne({where:{name}});
+  }
+
   async chageQuantity(id: number, stock: number) {
     return await Product.update({ stock }, { where: { id } });
   }

@@ -1,11 +1,12 @@
 import ProductController from "../controllers/productController";
 import { Router } from "express";
+import { authenticatePermissionsJWT } from "../middlewares/permissionsMiddleware";
 
 export const productRouter = Router();
 
-productRouter.post("/", ProductController.createProduct);
+productRouter.post("/", authenticatePermissionsJWT, ProductController.createProduct);
 productRouter.get("/", ProductController.getAll);
-productRouter.patch("/", ProductController.changeStock);
 productRouter.get("/:id", ProductController.getById);
-productRouter.delete("/:id", ProductController.delete);
+productRouter.patch("/", authenticatePermissionsJWT,  ProductController.changeStock);
+productRouter.delete("/:id", authenticatePermissionsJWT, ProductController.delete);
 // productRouter.get("/sorted", ProductController.getSorted)

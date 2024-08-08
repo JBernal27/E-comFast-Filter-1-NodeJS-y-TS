@@ -24,3 +24,14 @@ userRouter.get(
   UserController.getById
 );
 userRouter.post("/login", UserController.login);
+userRouter.delete(
+  "/:id",
+  authenticateJWT,
+  authenticatePermissionsJWT,
+  UserController.deleteUser
+);
+/* userRouter.patch(
+  "/:id",
+  authenticateJWT,
+  UserController.updateUser
+); */

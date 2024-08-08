@@ -5,16 +5,25 @@ import { Request, Response } from "express";
 export default class ProductController {
   static async createProduct(req: Request, res: Response) {
     const productService = container.resolve(ProductService);
-    const product = await productService.create(req.body);
-    res.status(201).json({
-      status: 201,
-      data: product
-    });
+    const productExist = await productService.getByName(req.body.name)
+    if (!productExist) {
+      const product = await productService.create(req.body);
+      res.status(201).json({
+        status: 201,
+        data: product
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: `Ya existe un producto con el nombre '${req.body.name}'`
+      })
+    }
   }
 
   static async getAll(req: Request, res: Response) {
     const productService = container.resolve(ProductService);
     const products = await productService.all();
+    console.log("por aca pase: Controller");
     res.status(200).json({
       status: 200,
       data: products
@@ -31,15 +40,15 @@ export default class ProductController {
           status: 200,
           data: product,
         });
-      }else{
-        throw new Error ("Los valores ingresados deben ser numericos")
+      } else {
+        throw new Error("Los valores ingresados deben ser numericos")
       }
     } catch (error) {
       res.status(400).json({
-          status: 400,
-          message: error instanceof Error ? error.message : 'An unexpected error occurred'
+        status: 400,
+        message: error instanceof Error ? error.message : 'An unexpected error occurred'
       });
-  }
+    }
   }
 
   static async getById(req: Request, res: Response) {
@@ -51,8 +60,8 @@ export default class ProductController {
           status: 200,
           data: user,
         });
-      }else{
-        throw new Error ("El id ingresado no es numerico")
+      } else {
+        throw new Error("El id ingresado no es numerico")
       }
     } catch (error) {
       res.status(400).json({
@@ -69,13 +78,14 @@ export default class ProductController {
     try {
       const productService = container.resolve(ProductService);
       if (!isNaN(Number(req.params.id))) {
+        await productService.getById(Number(req.params.id))
         await productService.delete(Number(req.params.id));
         res.status(200).json({
           status: 200,
           message: "El elemento de id " + req.params.id + " fue eliminado con exito"
         });
-      }else{
-        throw new Error ("El id ingresado no es numerico")
+      } else {
+        throw new Error("El id ingresado no es numerico")
       }
     } catch (error) {
       res.status(400).json({

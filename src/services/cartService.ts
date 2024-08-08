@@ -23,4 +23,8 @@ export default class CartService {
   async findByUser(userId: number) {
     return await this.cartRepocitory.findByUser(userId);
   }
+
+  async delete(id: number) {
+    return await this.cartRepocitory.delete(id);
+  }
 }

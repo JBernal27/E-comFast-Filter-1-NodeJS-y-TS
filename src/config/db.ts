@@ -12,7 +12,7 @@ const sequelize: Sequelize = new Sequelize({
   dialect: "mysql",
   host: "localhost",
   username: "root",
-  password: "Rlwl2023.",
+  password: "1022003230",
   database: "ecomfast",
   models: [User, Product, Order, Cart, Permissions, Entity, ProductCart, Role],
 });
