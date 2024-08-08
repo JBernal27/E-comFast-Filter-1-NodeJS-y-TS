@@ -18,5 +18,5 @@ use ecomfast;\
 - insert into entity(name, createdAt, updatedAt) values("User", now(), now());
 - insert into users(email,password,roleId, createdAt, updatedAt) values("admin@correo.com", "admin123", 1, now(), now());
 - insert into users(email,password,roleId, createdAt, updatedAt) values("normal@correo.com", "normal123", 2, now(), now());
-- insert into permissions(roleId, entityId, canCreate, canUpdate, canDelete, canGet, createdAt, updatedAt) values(2,2, true, true, true, true, now(), now());
-- insert into permissions(roleId, entityId, canCreate, canUpdate, canDelete, canGet, createdAt, updatedAt) values(1,1, true, true, false, true, now(), now());
+- insert into permissions(roleId, entityId, canCreate, canUpdate, canDelete, canGet, createdAt, updatedAt) values(2, 1, true, true, false, true, now(), now());
+- insert into permissions(roleId, entityId, canCreate, canUpdate, canDelete, canGet, createdAt, updatedAt) values(1, 2, true, true, true, true, now(), now());
